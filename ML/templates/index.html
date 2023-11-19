@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake News Detection</title>
+    <style>
+        body {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 200px;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+            resize: none;
+            font-size: 16px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        p {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .result-real {
+            color: green;
+        }
+        .result-fake {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fake News Detection</h1>
+    <form method="POST" action="/predict">
+        <label for="text">Enter the news text:</label><br>
+        <textarea name="text" id="text" cols="30" rows="10"></textarea> <br><br>
+        <button type="submit">Predict</button>
+    </form>
+    <br>
+    <p>Prediction: <span id="prediction"></span></p>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('form').on('submit', function(event) {
+            event.preventDefault();
+            var text = $('#text').val();
+            $.ajax({
+                type: 'POST',
+                url: '/predict',
+                data: {'text': text},
+                success: function(data) {
+                    var prediction = data.prediction;
+                    if (prediction == 0) {
+                        $('#prediction').text('The news is Real').addClass('result-real').removeClass('result-fake');
+                    } else {
+                        $('#prediction').text('The news is Fake').addClass('result-fake').removeClass('result-real');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

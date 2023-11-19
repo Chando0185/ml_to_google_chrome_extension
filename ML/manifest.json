@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Fake News Detection Extension",
+  "description": "A Chrome extension that predicts whether news articles are likely to be Fake or Not",
+  "version": "1.0",
+  "icons": {
+    "16": "img/icon16.jpg",
+    "48": "img/icon48.jpg",
+    "128": "img/icon128.jpg"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "host_permissions": [
+    "http://127.0.0.1:5000/"
+  ],
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.js"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}
